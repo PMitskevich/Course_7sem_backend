@@ -44,9 +44,6 @@ public class Owner {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "email")
-    private String email;
-
     @OneToOne(mappedBy = "owner")
     private User user;
 

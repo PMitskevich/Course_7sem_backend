@@ -35,8 +35,8 @@ public class User {
     @Column(name = "user_id")
     private UUID id;
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "password")
     private String password;

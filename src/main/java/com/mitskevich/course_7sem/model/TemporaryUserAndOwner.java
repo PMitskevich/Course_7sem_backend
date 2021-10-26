@@ -10,8 +10,8 @@ import javax.validation.constraints.Size;
 public class TemporaryUserAndOwner {
 
     @NotNull
-    @Size(min = 4, max = 12)
-    private String username;
+    @Pattern(regexp = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+    private String email;
 
     @NotNull
     @Size(min = 4)
@@ -40,8 +40,4 @@ public class TemporaryUserAndOwner {
     @NotNull
     @Pattern(regexp = "^(\\+375|80)(29|25|44|33)(\\d{3})(\\d{2})(\\d{2})$")
     private String phone;
-
-    @NotNull
-    @Pattern(regexp = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
-    private String email;
 }
