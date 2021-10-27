@@ -12,8 +12,7 @@ import org.mapstruct.Named;
 
 @Mapper(uses = {ReviewMapperHelper.class, UserMapperHelper.class})
 public interface ReviewMapper {
-    Review convertToReview(ReviewDTO reviewDTO);
-
     @Mapping(target = "user", qualifiedByName = "noReviewsUser")
     ReviewDTO convertToReviewDTO(Review review);
+    Review convertToReview(ReviewDTO reviewDTO);
 }

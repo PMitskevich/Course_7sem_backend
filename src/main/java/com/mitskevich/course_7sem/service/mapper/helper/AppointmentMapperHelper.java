@@ -14,8 +14,6 @@ import org.mapstruct.Named;
 
 @Mapper
 public interface AppointmentMapperHelper {
-    Doctor convertToDoctor(DoctorDTO doctorDTO);
-    DoctorDTO convertToDTO(Doctor doctor);
     Owner convertToOwner(OwnerDTO ownerDTO);
     OwnerDTO convertToOwnerDTO(Owner owner);
     Animal convertToAnimal(AnimalDTO animalDTO);

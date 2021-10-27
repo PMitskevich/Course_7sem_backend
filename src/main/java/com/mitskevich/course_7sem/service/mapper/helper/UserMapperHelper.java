@@ -14,7 +14,7 @@ import org.mapstruct.Named;
 import java.util.Collection;
 import java.util.List;
 
-@Mapper
+@Mapper(uses = {ReviewMapperHelper.class, OwnerMapperHelper.class})
 public interface UserMapperHelper {
     @Named("noReviewsUser")
     @Mapping(target = "reviews", ignore = true)
@@ -24,7 +24,6 @@ public interface UserMapperHelper {
     @Mapping(target = "owner", ignore = true)
     UserDTO convertToUserDTOWithoutOwner(User user);
 
-    Owner convertToOwner(OwnerDTO ownerDTO);
     Review convertReview(ReviewDTO reviewDTO);
     ReviewDTO convertReviewDTO(Review review);
 

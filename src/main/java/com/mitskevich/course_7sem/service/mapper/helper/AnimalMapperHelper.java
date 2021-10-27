@@ -23,6 +23,5 @@ public interface AnimalMapperHelper {
 
     @Mapping(target = "appointments", qualifiedByName = "noAnimalAppointment")
     List<AppointmentDTO> getAppointmentDTOList(Collection<Appointment> appointments);
-
     List<Appointment> getAppointmentList(Collection<AppointmentDTO> appointments);
 }

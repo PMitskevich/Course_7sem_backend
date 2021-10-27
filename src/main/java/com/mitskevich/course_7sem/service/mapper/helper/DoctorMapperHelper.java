@@ -21,6 +21,14 @@ public interface DoctorMapperHelper {
     @Mapping(target = "appointments", ignore = true)
     DoctorDTO convertToDoctorDTOWithoutAppointment(Doctor doctor);
 
+    @Named("noScheduleDayDoctor")
+    @Mapping(target = "scheduleDays", ignore = true)
+    DoctorDTO convertToDoctorDTOWithoutScheduleDays(Doctor doctor);
+
+    @Named("noSpecializationsInDoctor")
+    @Mapping(target = "specializations", ignore = true)
+    DoctorDTO convertToDoctorDTOWithoutSpecialization(Doctor doctor);
+
     @Mapping(target = "appointments", qualifiedByName = "noDoctorAppointment")
     List<AppointmentDTO> getAppointmentDTOListWithoutDoctor(Collection<Appointment> appointments);
     List<Appointment> getAppointmentList(Collection<AppointmentDTO> appointments);
