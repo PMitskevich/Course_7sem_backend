@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -24,9 +25,8 @@ import java.util.UUID;
 public class Appointment {
     @Id
     @GeneratedValue
-    @Type(type = "pg-uuid")
     @Column(name = "appointment_id")
-    private UUID id;
+    private BigInteger id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id")

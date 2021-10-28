@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,9 +29,8 @@ import java.util.UUID;
 public class Doctor {
     @Id
     @GeneratedValue
-    @Type(type = "pg-uuid")
     @Column(name = "doctor_id")
-    private UUID id;
+    private BigInteger id;
 
     @NotNull
     @Size(min = 2, max = 16)

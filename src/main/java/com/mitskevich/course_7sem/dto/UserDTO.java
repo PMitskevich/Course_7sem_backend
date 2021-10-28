@@ -6,13 +6,14 @@ import com.mitskevich.course_7sem.model.enums.Status;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 public class UserDTO {
-    private UUID id;
+    private BigInteger id;
     private String email;
     private String password;
     private String repeatPassword;

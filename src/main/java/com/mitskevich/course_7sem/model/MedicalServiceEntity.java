@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.math.BigInteger;
 import java.util.UUID;
 
 @Entity
@@ -24,9 +25,8 @@ import java.util.UUID;
 public class MedicalServiceEntity {
     @Id
     @GeneratedValue
-    @Type(type = "pg-uuid")
     @Column(name = "service_id")
-    private UUID id;
+    private BigInteger id;
 
     @Column(name = "name")
     private String name;
@@ -38,7 +38,7 @@ public class MedicalServiceEntity {
     @JoinColumn(name = "specialization_id")
     private Specialization specialization;
 
-    public MedicalServiceEntity(UUID id, String name, String price, Specialization specialization) {
+    public MedicalServiceEntity(BigInteger id, String name, String price, Specialization specialization) {
         this.id = id;
         this.name = name;
         this.price = price;

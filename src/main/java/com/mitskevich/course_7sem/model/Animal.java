@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -29,9 +30,8 @@ import java.util.UUID;
 public class Animal {
     @Id
     @GeneratedValue
-    @Type(type = "pg-uuid")
     @Column(name = "animal_id")
-    private UUID id;
+    private BigInteger id;
 
     @Column(name = "name")
     private String name;

@@ -16,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,9 +28,8 @@ import java.util.UUID;
 public class Specialization {
     @Id
     @GeneratedValue
-    @Type(type = "pg-uuid")
     @Column(name = "specialization_id")
-    private UUID id;
+    private BigInteger id;
 
     @Column(name = "name")
     private String name;

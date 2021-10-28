@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,9 +32,8 @@ import java.util.UUID;
 public class User {
     @Id
     @GeneratedValue
-    @Type(type = "pg-uuid")
     @Column(name = "user_id")
-    private UUID id;
+    private BigInteger id;
 
     @Column(name = "email")
     private String email;

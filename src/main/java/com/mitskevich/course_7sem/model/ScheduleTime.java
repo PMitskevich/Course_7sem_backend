@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.math.BigInteger;
 import java.time.LocalTime;
 import java.util.UUID;
 
@@ -22,9 +23,8 @@ import java.util.UUID;
 public class ScheduleTime {
     @Id
     @GeneratedValue
-    @Type(type = "pg-uuid")
     @Column(name = "schedule_time_id")
-    private UUID id;
+    private BigInteger id;
 
     @Column(name = "schedule_time")
     private LocalTime time;

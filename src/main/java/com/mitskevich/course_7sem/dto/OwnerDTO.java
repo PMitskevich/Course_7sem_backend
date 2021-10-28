@@ -3,13 +3,14 @@ package com.mitskevich.course_7sem.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
 @Data
 public class OwnerDTO {
-    private UUID id;
+    private BigInteger id;
     private String firstName;
     private String lastName;
     private String patronymic;

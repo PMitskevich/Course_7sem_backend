@@ -6,6 +6,7 @@ import com.mitskevich.course_7sem.repository.UserRepository;
 import com.mitskevich.course_7sem.service.interfaces.UserService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,17 +31,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(UUID uuid, User user) {
+    public User update(BigInteger uuid, User user) {
         return null;
     }
 
     @Override
-    public void delete(UUID uuid) {
+    public void delete(BigInteger uuid) {
 
     }
 
     @Override
-    public User findById(UUID uuid) {
+    public User findById(BigInteger uuid) {
         return null;
     }
 

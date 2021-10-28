@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,9 +26,8 @@ import java.util.UUID;
 public class Owner {
     @Id
     @GeneratedValue
-    @Type(type = "pg-uuid")
     @Column(name = "owner_id")
-    private UUID id;
+    private BigInteger id;
 
     @Column(name = "first_name")
     private String firstName;
