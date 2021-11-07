@@ -10,7 +10,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 public class AppointmentDTO {
-    private BigInteger id;
+    private UUID id;
     private DoctorDTO doctor;
     private OwnerDTO owner;
     private AnimalDTO animal;

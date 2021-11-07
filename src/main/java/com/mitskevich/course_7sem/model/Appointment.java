@@ -26,7 +26,8 @@ public class Appointment {
     @Id
     @GeneratedValue
     @Column(name = "appointment_id")
-    private BigInteger id;
+    @Type(type = "pg-uuid")
+    private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id")

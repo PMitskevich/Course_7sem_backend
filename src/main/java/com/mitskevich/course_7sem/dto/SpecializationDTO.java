@@ -10,7 +10,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 public class SpecializationDTO {
-    private BigInteger id;
+    private UUID id;
     private String name;
     private String description;
     private List<DoctorDTO> doctors;

@@ -13,10 +13,9 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 public class UserDTO {
-    private BigInteger id;
+    private UUID id;
     private String email;
     private String password;
-    private String repeatPassword;
     private Role role;
     private Status status;
     private OwnerDTO owner;

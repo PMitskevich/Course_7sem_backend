@@ -32,17 +32,15 @@ import java.util.UUID;
 public class User {
     @Id
     @GeneratedValue
+    @Type(type = "pg-uuid")
     @Column(name = "user_id")
-    private BigInteger id;
+    private UUID id;
 
     @Column(name = "email")
     private String email;
 
     @Column(name = "password")
     private String password;
-
-    @Transient
-    private String repeatPassword;
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)

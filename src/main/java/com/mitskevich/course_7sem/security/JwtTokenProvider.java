@@ -1,6 +1,7 @@
 package com.mitskevich.course_7sem.security;
 
 import com.mitskevich.course_7sem.exception.JwtAuthenticationException;
+import com.mitskevich.course_7sem.exception.detail.ErrorInfo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
@@ -8,7 +9,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +26,7 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private final UserDetailsService userDetailsService;
+    private final MessageSource messageSource;
 
     @Value("${jwt.header}")
     private String authorizationHeader;
@@ -32,8 +35,9 @@ public class JwtTokenProvider {
     @Value("${jwt.duration}")
     private long tokenDurationInMillis;
 
-    public JwtTokenProvider(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
+    public JwtTokenProvider(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService, MessageSource messageSource) {
         this.userDetailsService = userDetailsService;
+        this.messageSource = messageSource;
     }
 
     @PostConstruct
@@ -61,7 +65,8 @@ public class JwtTokenProvider {
             return !claimsJws.getBody().getExpiration().before(new Date());
         }
         catch (JwtException | IllegalArgumentException exception) {
-            throw new JwtAuthenticationException("Authorization token has been expired or it's invalid", HttpStatus.FORBIDDEN);
+            throw new JwtAuthenticationException(ErrorInfo.AUTHENTICATION_EXCEPTION,
+                    messageSource.getMessage("message.AuthenticationException", new Object[]{null}, LocaleContextHolder.getLocale()));
         }
     }
 

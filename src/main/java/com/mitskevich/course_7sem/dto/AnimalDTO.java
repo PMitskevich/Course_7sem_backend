@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 public class AnimalDTO {
-    private BigInteger id;
+    private UUID id;
     private String name;
     private LocalDate birthday;
     private String breed;

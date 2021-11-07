@@ -11,7 +11,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 public class ScheduleDayDTO {
-    private BigInteger id;
+    private UUID id;
     private LocalDate date;
     private Boolean isBlocked;
     private DoctorDTO doctor;

@@ -26,7 +26,8 @@ public class Review {
     @Id
     @GeneratedValue
     @Column(name = "review_id")
-    private BigInteger id;
+    @Type(type = "pg-uuid")
+    private UUID id;
 
     @Column(name = "description")
     private String description;
@@ -35,7 +36,7 @@ public class Review {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Review(BigInteger id, String description, User user) {
+    public Review(UUID id, String description, User user) {
         this.id = id;
         this.description = description;
         this.user = user;

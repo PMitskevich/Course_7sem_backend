@@ -27,7 +27,8 @@ public class Owner {
     @Id
     @GeneratedValue
     @Column(name = "owner_id")
-    private BigInteger id;
+    @Type(type = "pg-uuid")
+    private UUID id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -43,6 +44,9 @@ public class Owner {
 
     @Column(name = "phone")
     private String phone;
+
+    @Column(name = "email")
+    private String email;
 
     @OneToOne(mappedBy = "owner")
     private User user;

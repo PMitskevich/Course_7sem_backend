@@ -30,7 +30,8 @@ public class Doctor {
     @Id
     @GeneratedValue
     @Column(name = "doctor_id")
-    private BigInteger id;
+    @Type(type = "pg-uuid")
+    private UUID id;
 
     @NotNull
     @Size(min = 2, max = 16)

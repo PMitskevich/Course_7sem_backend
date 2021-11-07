@@ -29,7 +29,8 @@ public class Specialization {
     @Id
     @GeneratedValue
     @Column(name = "specialization_id")
-    private BigInteger id;
+    @Type(type = "pg-uuid")
+    private UUID id;
 
     @Column(name = "name")
     private String name;

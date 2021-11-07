@@ -31,7 +31,8 @@ public class Animal {
     @Id
     @GeneratedValue
     @Column(name = "animal_id")
-    private BigInteger id;
+    @Type(type = "pg-uuid")
+    private UUID id;
 
     @Column(name = "name")
     private String name;

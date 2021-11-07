@@ -10,7 +10,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 public class ScheduleTimeDTO {
-    private BigInteger id;
+    private UUID id;
     private LocalTime time;
     private Boolean isBlocked;
     private ScheduleDayDTO scheduleDay;

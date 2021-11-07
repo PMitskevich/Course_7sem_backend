@@ -27,7 +27,8 @@ public class ScheduleDay {
     @Id
     @GeneratedValue
     @Column(name = "schedule_day_id")
-    private BigInteger id;
+    @Type(type = "pg-uuid")
+    private UUID id;
 
     @Column(name = "date")
     private LocalDate date;

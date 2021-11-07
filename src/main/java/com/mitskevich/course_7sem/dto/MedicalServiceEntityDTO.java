@@ -9,7 +9,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 public class MedicalServiceEntityDTO {
-    private BigInteger id;
+    private UUID id;
     private String name;
     private String price;
     private SpecializationDTO specialization;

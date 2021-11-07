@@ -9,7 +9,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 public class ReviewDTO {
-    private BigInteger id;
+    private UUID id;
     private String description;
     private UserDTO user;
 }

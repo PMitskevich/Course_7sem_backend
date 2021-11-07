@@ -24,7 +24,8 @@ public class ScheduleTime {
     @Id
     @GeneratedValue
     @Column(name = "schedule_time_id")
-    private BigInteger id;
+    @Type(type = "pg-uuid")
+    private UUID id;
 
     @Column(name = "schedule_time")
     private LocalTime time;

@@ -26,7 +26,8 @@ public class MedicalServiceEntity {
     @Id
     @GeneratedValue
     @Column(name = "service_id")
-    private BigInteger id;
+    @Type(type = "pg-uuid")
+    private UUID id;
 
     @Column(name = "name")
     private String name;
@@ -38,7 +39,7 @@ public class MedicalServiceEntity {
     @JoinColumn(name = "specialization_id")
     private Specialization specialization;
 
-    public MedicalServiceEntity(BigInteger id, String name, String price, Specialization specialization) {
+    public MedicalServiceEntity(UUID id, String name, String price, Specialization specialization) {
         this.id = id;
         this.name = name;
         this.price = price;

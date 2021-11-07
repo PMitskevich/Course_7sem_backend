@@ -10,7 +10,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 public class DoctorDTO {
-    private BigInteger id;
+    private UUID id;
     private String firstName;
     private String lastName;
     private String patronymic;
