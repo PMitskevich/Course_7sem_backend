@@ -1,17 +1,18 @@
 package com.mitskevich.course_7sem.controller;
 
 import com.mitskevich.course_7sem.dto.AuthenticationRequestDTO;
-import com.mitskevich.course_7sem.model.User;
-import com.mitskevich.course_7sem.repository.UserRepository;
-import com.mitskevich.course_7sem.security.JwtTokenProvider;
+import com.mitskevich.course_7sem.exception.InvalidEmailOrPasswordException;
+import com.mitskevich.course_7sem.exception.detail.ErrorInfo;
+import com.mitskevich.course_7sem.service.interfaces.AuthenticationService;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,46 +20,35 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
 
-    private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
-    private final JwtTokenProvider jwtTokenProvider;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final AuthenticationService authenticationService;
+    private final MessageSource messageSource;
 
-    public AuthenticationController(AuthenticationManager authenticationManager, UserRepository userRepository, JwtTokenProvider jwtTokenProvider, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    public AuthenticationController(AuthenticationService authenticationService, MessageSource messageSource) {
+        this.authenticationService = authenticationService;
+        this.messageSource = messageSource;
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestDTO authenticationDTO) {
         try {
-            String email = authenticationDTO.getEmail();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    email,
-                    authenticationDTO.getPassword()));
-            User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User doesn't exists"));
-            String token = jwtTokenProvider.createToken(email, user.getRole().name());
-            Map<Object, Object> response = new HashMap<>();
-            response.put("email", email);
-            response.put("token", token);
-            return ResponseEntity.ok(response);
+            return authenticationService.authenticate(authenticationDTO);
         } catch (AuthenticationException exception) {
-            return new ResponseEntity<>("Invalid email or password", HttpStatus.FORBIDDEN);
+            throw new InvalidEmailOrPasswordException(ErrorInfo.INVALID_EMAIL_OR_PASSWORD_EXCEPTION,
+                    messageSource.getMessage("message.InvalidEmailOrPasswordException", new Object[]{}, LocaleContextHolder.getLocale()));
         }
     }
 
-    @PostMapping("/logout")
-    public void logout(HttpServletRequest request, HttpServletResponse response) {
+    @GetMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
         SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
         securityContextLogoutHandler.logout(request, response, null);
+        return ResponseEntity.ok(Collections.singletonMap("response",
+                        messageSource.getMessage("message.UserSuccessfullyLoggedOut", new Object[]{}, LocaleContextHolder.getLocale())));
     }
 }

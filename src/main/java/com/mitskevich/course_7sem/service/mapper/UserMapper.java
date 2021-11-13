@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 @Mapper(uses = {UserMapperHelper.class, OwnerMapperHelper.class})
 public interface UserMapper {
     @Mapping(target = "owner", qualifiedByName = "noUserOwner")
+    @Mapping(target = "password", ignore = true)
     UserDTO convertToUserDTO(User user);
     User convertToUser(UserDTO userDTO);
 }

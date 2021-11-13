@@ -7,7 +7,6 @@ import com.mitskevich.course_7sem.exception.detail.ErrorInfo;
 import com.mitskevich.course_7sem.model.Review;
 import com.mitskevich.course_7sem.model.User;
 import com.mitskevich.course_7sem.repository.UserRepository;
-import com.mitskevich.course_7sem.service.interfaces.OwnerService;
 import com.mitskevich.course_7sem.service.interfaces.UserService;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -114,12 +113,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        return Optional.ofNullable(userRepository.findByEmail(email).orElseThrow(() ->
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() ->
                 new ResourceNotFoundException(ErrorInfo.RESOURCE_NOT_FOUND, messageSource.getMessage("message.ResourceNotFound",
                         new Object[]{email,
                                 messageSource.getMessage("criterion.email", null, LocaleContextHolder.getLocale()),
-                                messageSource.getMessage("entity.User", null, LocaleContextHolder.getLocale())}, LocaleContextHolder.getLocale()))));
+                                messageSource.getMessage("entity.User", null, LocaleContextHolder.getLocale())}, LocaleContextHolder.getLocale())));
     }
 
     @Override

@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -46,6 +47,9 @@ public class JwtTokenFilter extends GenericFilterBean {
             throw new JwtAuthenticationException(ErrorInfo.AUTHENTICATION_EXCEPTION,
                     messageSource.getMessage("message.AuthenticationException", new Object[]{null}, LocaleContextHolder.getLocale()));
         }
+        ((HttpServletResponse) servletResponse).setHeader("Access-Control-Expose-Headers", "Origin, X-Requested-With, " +
+                "Content-Type, Accept, Accept-Encoding, Accept-Language, Host," +
+                "Referer, Connection, User-Agent, Authorization, sw-useragent, sw-version");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 }

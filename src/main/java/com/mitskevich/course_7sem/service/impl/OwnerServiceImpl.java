@@ -47,8 +47,8 @@ public class OwnerServiceImpl implements OwnerService {
     public Owner updateOwner(Owner owner, UUID ownerId) {
         owner.setId(ownerId);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Optional<User> user = userService.findByEmail(authentication.getName());
-        owner.setUser(user.get());
+        User user = userService.findByEmail(authentication.getName());
+        owner.setUser(user);
         return ownerRepository.save(owner);
     }
 
