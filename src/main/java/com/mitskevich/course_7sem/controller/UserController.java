@@ -43,36 +43,21 @@ public class UserController {
     }
 
     @PostMapping("/addAdmin")
-    public ResponseEntity<?> addNewAdmin(@RequestBody UserDTO userDTO) {
+    public UserDTO addNewAdmin(@RequestBody UserDTO userDTO) {
         User user = userMapper.convertToUser(userDTO);
-        if ((user = userService.saveAdmin(user)) != null) {
-            return ResponseEntity.ok(userMapper.convertToUserDTO(user));
-        }
-        else {
-            return ResponseEntity.badRequest().body("Что-то пошло не так с созданием нового пользователя...");
-        }
+        return userMapper.convertToUserDTO(userService.saveAdmin(user));
     }
 
     @PostMapping("/addUser")
-    public ResponseEntity<?> addNewUser(@RequestBody UserDTO userDTO) {
+    public UserDTO addNewUser(@RequestBody UserDTO userDTO) {
         User user = userMapper.convertToUser(userDTO);
-        if ((user = userService.save(user)) != null) {
-            return ResponseEntity.ok(userMapper.convertToUserDTO(user));
-        }
-        else {
-            return ResponseEntity.badRequest().body("Что-то пошло не так с созданием нового пользователя...");
-        }
+        return userMapper.convertToUserDTO(userService.save(user));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable UUID id, @RequestBody UserDTO userDTO) {
+    public UserDTO updateUser(@PathVariable UUID id, @RequestBody UserDTO userDTO) {
         User user = userMapper.convertToUser(userDTO);
-        if ((user = userService.update(id, user)) != null) {
-            return ResponseEntity.ok(userMapper.convertToUserDTO(user));
-        }
-        else {
-            return ResponseEntity.badRequest().body("Что-то пошло не так с обновлением пользователя");
-        }
+        return userMapper.convertToUserDTO(userService.update(id, user));
     }
 
     @DeleteMapping("/{id}")

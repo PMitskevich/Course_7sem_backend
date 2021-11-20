@@ -1,12 +1,13 @@
 package com.mitskevich.course_7sem.service.interfaces;
 
+import com.mitskevich.course_7sem.model.Owner;
 import com.mitskevich.course_7sem.model.User;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
-//    User preSaveOperation(User temporaryUserAndOwner);
+    User preSaveOperation(Owner owner);
     User save(User user);
     User saveAdmin(User user);
     User update(UUID id, User user);

@@ -4,8 +4,11 @@ import com.mitskevich.course_7sem.exception.DeleteEntityException;
 import com.mitskevich.course_7sem.exception.ResourceNotFoundException;
 import com.mitskevich.course_7sem.exception.UserAlreadyExistsException;
 import com.mitskevich.course_7sem.exception.detail.ErrorInfo;
+import com.mitskevich.course_7sem.model.Owner;
 import com.mitskevich.course_7sem.model.Review;
 import com.mitskevich.course_7sem.model.User;
+import com.mitskevich.course_7sem.model.enums.Role;
+import com.mitskevich.course_7sem.model.enums.Status;
 import com.mitskevich.course_7sem.repository.UserRepository;
 import com.mitskevich.course_7sem.service.interfaces.UserService;
 import org.springframework.context.MessageSource;
@@ -31,25 +34,14 @@ public class UserServiceImpl implements UserService {
         this.messageSource = messageSource;
     }
 
-//    @Override
-//    public User preSaveOperation(User userRequest) {
-//        User user = new User();
-//
-//        String password = userRequest.getPassword();
-//        user.setEmail(userRequest.getEmail());
-//        user.setPassword(bCryptPasswordEncoder.encode(password));
-//        user.setRole(Role.USER);
-//        user.setStatus(Status.ACTIVE);
-//        user.setOwner(userRequest.getOwner());
-//        owner.setFirstName(temporaryUserAndOwner.getFirstName());
-//        owner.setLastName(temporaryUserAndOwner.getLastName());
-//        owner.setPatronymic(temporaryUserAndOwner.getPatronymic());
-//        owner.setAddress(temporaryUserAndOwner.getAddress());
-//        owner.setEmail(temporaryUserAndOwner.getEmail());
-//        owner.setPhone(temporaryUserAndOwner.getPhone());
-//
-//        return user;
-//    }
+    @Override
+    public User preSaveOperation(Owner owner) {
+        User userBeforeSaving = owner.getUser();
+        userBeforeSaving.setStatus(Status.ACTIVE);
+        userBeforeSaving.setRole(Role.USER);
+        userBeforeSaving.setOwner(owner);
+        return userBeforeSaving;
+    }
 
     @Override
     public User save(User user) {

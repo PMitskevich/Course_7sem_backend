@@ -25,6 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors().and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -37,6 +38,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/user/{\\w+}").authenticated()
                 .antMatchers(HttpMethod.PUT, "/user/{\\w+}").hasAuthority(Role.USER.name())
                 .antMatchers(HttpMethod.DELETE, "/user/{\\w+}").hasAuthority(Role.ADMIN.name())
+                .antMatchers("/owner/addOwner").permitAll()
+                .antMatchers(HttpMethod.GET, "/owner/{\\w+}").hasAuthority(Role.USER.name())
+                .antMatchers(HttpMethod.PUT, "/owner/{\\w+}").hasAuthority(Role.USER.name())
+                .antMatchers(HttpMethod.DELETE, "/owner/{\\w+}").hasAuthority(Role.ADMIN.name())
+                .antMatchers("/specialization/all").permitAll()
+                .antMatchers(HttpMethod.PUT, "/specialization/addSpecialization").hasAuthority(Role.ADMIN.name())
+                .antMatchers(HttpMethod.GET, "/specialization/{\\w+}").permitAll()
+                .antMatchers(HttpMethod.PUT, "/specialization/{\\w+}").hasAuthority(Role.ADMIN.name())
+                .antMatchers(HttpMethod.DELETE, "/specialization/{\\w+}").hasAuthority(Role.ADMIN.name())
                 .anyRequest().authenticated()
                 .and()
                 .apply(jwtConfigurer);
