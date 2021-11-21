@@ -45,6 +45,6 @@ public class Specialization {
             inverseJoinColumns = @JoinColumn(name = "doctor_id"))
     private List<Doctor> doctors;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "specialization")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "specialization")
     private List<MedicalServiceEntity> medicalServiceEntities;
 }

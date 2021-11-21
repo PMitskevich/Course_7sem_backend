@@ -8,6 +8,7 @@ import com.mitskevich.course_7sem.model.Doctor;
 import com.mitskevich.course_7sem.model.MedicalServiceEntity;
 import com.mitskevich.course_7sem.model.Specialization;
 import com.mitskevich.course_7sem.repository.SpecializationRepository;
+import com.mitskevich.course_7sem.service.interfaces.MedicalService;
 import com.mitskevich.course_7sem.service.interfaces.SpecializationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -16,22 +17,28 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class SpecializationServiceImpl implements SpecializationService {
 
     private final SpecializationRepository specializationRepository;
     private final MessageSource messageSource;
+    private final MedicalService medicalService;
 
     @Autowired
-    public SpecializationServiceImpl(SpecializationRepository specializationRepository, MessageSource messageSource) {
+    public SpecializationServiceImpl(SpecializationRepository specializationRepository, MessageSource messageSource, MedicalService medicalService) {
         this.specializationRepository = specializationRepository;
         this.messageSource = messageSource;
+        this.medicalService = medicalService;
     }
 
     @Override
     public Specialization saveSpecialization(Specialization specialization) {
         if (specializationRepository.findByName(specialization.getName()).isEmpty()) {
+            for (MedicalServiceEntity medicalServiceEntity: specialization.getMedicalServiceEntities()) {
+                medicalServiceEntity.setSpecialization(specialization);
+            }
             return specializationRepository.save(specialization);
         } else {
             throw new SpecializationAlreadyExistsException(ErrorInfo.SPECIALIZATION_ALREADY_EXISTS_EXCEPTION,
@@ -65,9 +72,10 @@ public class SpecializationServiceImpl implements SpecializationService {
                 doctors.addAll(specialization.getDoctors());
             }
             if (specialization1.getMedicalServiceEntities() != null && specialization.getMedicalServiceEntities() != null) {
-                List<MedicalServiceEntity> medicalServiceEntities = specialization1.getMedicalServiceEntities();
-                medicalServiceEntities.clear();
-                medicalServiceEntities.addAll(specialization.getMedicalServiceEntities());
+                List<MedicalServiceEntity> oldMedicalServiceEntities = specialization1.getMedicalServiceEntities();
+                oldMedicalServiceEntities.clear();
+                specialization.getMedicalServiceEntities().forEach(medicalServiceEntity -> medicalServiceEntity.setSpecialization(specialization));
+                oldMedicalServiceEntities.addAll(specialization.getMedicalServiceEntities());
             }
             return specializationRepository.save(specialization1);
         }).orElseThrow(() -> new ResourceNotFoundException(ErrorInfo.RESOURCE_NOT_FOUND,

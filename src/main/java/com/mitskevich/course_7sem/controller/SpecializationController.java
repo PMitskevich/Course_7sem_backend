@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -55,7 +56,7 @@ public class SpecializationController {
     @DeleteMapping("/{specializationId}")
     public ResponseEntity<?> deleteSpecialization(@PathVariable UUID specializationId) {
         specializationService.deleteById(specializationId);
-        return ResponseEntity.ok("Специализация успешно удалена!");
+        return ResponseEntity.ok(Collections.singletonMap("response", "Специализация успешно удалена!"));
     }
 
     @PostMapping("/addSpecialization")

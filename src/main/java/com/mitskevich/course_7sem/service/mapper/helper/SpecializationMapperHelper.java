@@ -27,7 +27,7 @@ public interface SpecializationMapperHelper {
     List<DoctorDTO> getDoctorDTOList(Collection<Doctor> doctors);
     List<Doctor> getDoctoriList(Collection<DoctorDTO> doctors);
 
-    @Mapping(target = "medicalServiceEntities", qualifiedByName = "noSpecializationInMedicalServiceEntity")
-    List<MedicalServiceEntityDTO> getMedicalServiceEntityList(Collection<MedicalServiceEntity> medicalServiceEntities);
-    List<MedicalServiceEntity> getMedicalServiceEntityDTOList(Collection<MedicalServiceEntityDTO> medicalServiceEntitys);
+//    @Mapping(target = "medicalServiceEntities", qualifiedByName = "noSpecializationInMedicalServiceEntity")
+//    List<MedicalServiceEntityDTO> getMedicalServiceEntityDTOList(Collection<MedicalServiceEntity> medicalServiceEntities);
+    List<MedicalServiceEntity> getMedicalServiceEntityList(Collection<MedicalServiceEntityDTO> medicalServiceEntitys);
 }
