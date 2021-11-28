@@ -15,10 +15,6 @@ import java.util.List;
 
 @Mapper(uses = {DoctorMapperHelper.class})
 public interface SpecializationMapperHelper {
-    @Named("noDoctorSpecialization")
-    @Mapping(target = "doctors", ignore = true)
-    SpecializationDTO convertToSpecializationDTOWithoutDoctors(Specialization specialization);
-
     @Named("noMedicalServiceEntityInSpecialization")
     @Mapping(target = "medicalServiceEntities", ignore = true)
     SpecializationDTO convertToSpecializationDTOWithoutMedicalServiceEntitys(Specialization specialization);

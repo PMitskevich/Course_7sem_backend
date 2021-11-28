@@ -26,8 +26,4 @@ public interface AppointmentMapperHelper {
     @Named("noOwnerAppointments")
     @Mapping(target = "owner", ignore = true)
     AppointmentDTO convertToAppointmentDTOWithoutOwner(Appointment appointment);
-
-    @Named("noDoctorAppointment")
-    @Mapping(target = "doctor", ignore = true)
-    AppointmentDTO convertToAppointmentDTOWithoutDoctor(Appointment appointment);
 }

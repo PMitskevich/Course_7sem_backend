@@ -33,33 +33,33 @@ public class Doctor {
     @Type(type = "pg-uuid")
     private UUID id;
 
-    @NotNull
-    @Size(min = 2, max = 16)
+//    @NotNull
+//    @Size(min = 2, max = 16)
     @Column(name = "first_name")
     private String firstName;
 
-    @NotNull
-    @Size(min = 2, max = 16)
+//    @NotNull
+//    @Size(min = 2, max = 16)
     @Column(name = "last_name")
     private String lastName;
 
-    @NotNull
-    @Size(min = 2, max = 20)
+//    @NotNull
+//    @Size(min = 2, max = 20)
     @Column(name = "patronymic")
     private String patronymic;
 
-    @NotNull
-    @Size(min = 2)
+//    @NotNull
+//    @Size(min = 2)
     @Column(name = "address")
     private String address;
 
-    @NotNull
-    @Pattern(regexp = "^(\\+375|80)(29|25|44|33)(\\d{3})(\\d{2})(\\d{2})$")
+//    @NotNull
+//    @Pattern(regexp = "^(\\+375|80)(29|25|44|33)(\\d{3})(\\d{2})(\\d{2})$")
     @Column(name = "phone")
     private String phone;
 
-    @NotNull
-    @Size(min = 4)
+//    @NotNull
+//    @Size(min = 4)
     @Column(name = "experience")
     private String experience;
 
