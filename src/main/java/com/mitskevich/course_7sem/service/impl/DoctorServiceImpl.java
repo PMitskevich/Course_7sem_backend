@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -98,14 +99,14 @@ public class DoctorServiceImpl implements DoctorService {
     private void setSpecializations(Doctor doctor, List<Specialization> newSpecializationsInDoctor) {
         if (newSpecializationsInDoctor != null) {
             List<Specialization> oldSpecializationsInDoctor = doctor.getSpecializations();
-            List<Specialization> resultSpecializations;
             if (!oldSpecializationsInDoctor.equals(newSpecializationsInDoctor)) {
-                //Update кейс
-                resultSpecializations = getSpecializationListForUpdateCase();
-            } else {
-                resultSpecializations = newSpecializationsInDoctor;
+                //Кейс, при котором в конструкторе доктора удаляется специализация
+                List<Specialization> specializationsForRemoving = getSpecializationListForRemoving(oldSpecializationsInDoctor, newSpecializationsInDoctor);
+                for (Specialization specialization: specializationsForRemoving) {
+                    specialization.getDoctors().removeIf(doctorInCurrentSpec -> doctorInCurrentSpec.getId().equals(doctor.getId()));
+                }
             }
-            for (Specialization specializationInDoctor: resultSpecializations) {
+            for (Specialization specializationInDoctor: newSpecializationsInDoctor) {
                 if (!doctor.getSpecializations().equals(newSpecializationsInDoctor)) {
                     if (oldSpecializationsInDoctor.stream()
                             .anyMatch(doctorSpecialization -> specializationInDoctor.getId().equals(doctorSpecialization.getId()))) {
@@ -124,10 +125,10 @@ public class DoctorServiceImpl implements DoctorService {
         }
     }
 
-    private List<Specialization> getSpecializationListForUpdateCase(List<Specialization> oldSpecializationsInDoctor,
+    private List<Specialization> getSpecializationListForRemoving(List<Specialization> oldSpecializationsInDoctor,
                                                                     List<Specialization> newSpecializationsInDoctor) {
-        List<Specialization> resultSpecializations;
-        
-        return resultSpecializations;
+        return oldSpecializationsInDoctor.stream()
+                .filter(specialization -> newSpecializationsInDoctor.stream()
+                        .filter(newSpec -> newSpec.getId().equals(specialization.getId())).findAny().isEmpty()).collect(Collectors.toList());
     }
 }

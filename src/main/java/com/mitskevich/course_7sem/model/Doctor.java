@@ -1,5 +1,6 @@
 package com.mitskevich.course_7sem.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +27,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Doctor {
     @Id
     @GeneratedValue
