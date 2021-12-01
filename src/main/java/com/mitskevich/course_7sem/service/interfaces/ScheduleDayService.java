@@ -12,6 +12,8 @@ public interface ScheduleDayService {
     List<ScheduleDay> getScheduleByDoctorId(UUID doctorId);
     List<ScheduleDay> createSchedule(Doctor doctor);
     List<ScheduleDay> updateSchedule(Doctor doctor);
+    ScheduleDay updateSchedule(ScheduleDay scheduleDay);
     void deleteSchedule(UUID doctorId);
     ScheduleDay findByDate(LocalDate date, UUID doctorId);
+    boolean isAllScheduleTimesBlocked(UUID scheduleDayId);
 }

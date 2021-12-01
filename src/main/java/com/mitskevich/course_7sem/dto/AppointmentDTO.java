@@ -14,5 +14,5 @@ public class AppointmentDTO {
     private DoctorDTO doctor;
     private OwnerDTO owner;
     private AnimalDTO animal;
-    private LocalDateTime dateTime;
+    private String dateTime;
 }

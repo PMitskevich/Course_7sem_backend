@@ -1,6 +1,7 @@
 package com.mitskevich.course_7sem.model;
 
 import com.mitskevich.course_7sem.model.enums.Gender;
+import com.mitskevich.course_7sem.utils.GenderConverter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -45,7 +49,7 @@ public class Animal {
     private String breed;
 
     @Column(name = "gender")
-    private Gender gender;
+    private String gender;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")

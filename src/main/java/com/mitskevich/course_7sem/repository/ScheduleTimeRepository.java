@@ -12,4 +12,5 @@ import java.util.UUID;
 public interface ScheduleTimeRepository extends JpaRepository<ScheduleTime, UUID> {
     List<ScheduleTime> findByScheduleDayId(UUID id);
     ScheduleTime findByScheduleDayIdAndTime(UUID scheduleDayId, LocalTime time);
+    List<ScheduleTime> findScheduleTimeByIsBlockedAndScheduleDayId(Boolean isBlocked, UUID scheduleDayId);
 }

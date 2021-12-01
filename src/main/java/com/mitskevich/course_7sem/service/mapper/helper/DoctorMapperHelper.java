@@ -18,14 +18,14 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 
 @Mapper
 public interface DoctorMapperHelper {
-    @Named("noAppointmentDoctor")
-    @Mapping(target = "appointments", ignore = true)
-    DoctorDTO convertToDoctorDTOWithoutAppointment(Doctor doctor);
 
     @Named("noScheduleDayDoctor")
     @Mapping(target = "scheduleDays", ignore = true)
@@ -37,7 +37,7 @@ public interface DoctorMapperHelper {
 
     @IterableMapping(qualifiedByName = "noDoctorAppointment")
     List<AppointmentDTO> getAppointmentDTOListWithoutDoctor(Collection<Appointment> appointments);
-    List<Appointment> getAppointmentList(Collection<AppointmentDTO> appointments);
+//    List<Appointment> getAppointmentList(Collection<AppointmentDTO> appointments);
 
     @IterableMapping(qualifiedByName = "noDoctorSpecializations")
     List<SpecializationDTO> getSpecializationDTOListWithoutDoctor(Collection<Specialization> specializations);
@@ -70,8 +70,32 @@ public interface DoctorMapperHelper {
     SpecializationDTO convertToSpecializationDTOWithoutDoctors(Specialization specialization);
 
     @Named("noDoctorAppointment")
-    @Mapping(target = "doctor", ignore = true)
+    @Mappings({
+            @Mapping(target = "doctor", ignore = true),
+            @Mapping(target = "animal", ignore = true),
+            @Mapping(target = "owner", ignore = true),
+            @Mapping(target = "dateTime", qualifiedByName = "dateTimeConversionToString")
+    })
     AppointmentDTO convertToAppointmentDTOWithoutDoctor(Appointment appointment);
+
+    @Named("dateTimeConversionToString")
+    default String convertToString(LocalDateTime localDateTime) {
+        StringBuilder stringBuilder = new StringBuilder(String.valueOf(localDateTime.toLocalDate()));
+        LocalTime localTime = localDateTime.toLocalTime();
+        stringBuilder.append(" ").append(localTime.getHour());
+        int minutes = localTime.getMinute();
+        stringBuilder.append(":").append(minutes == 0 ? "00" : minutes);
+        return stringBuilder.toString();
+    }
+
+    @Mapping(target = "dateTime", qualifiedByName = "dateTimeConversionToLocalDateTime")
+    Appointment convertToAppointmentWithConversionToLocalDateTime(AppointmentDTO appointmentDTO);
+
+    @Named("dateTimeConversionToLocalDateTime")
+    default LocalDateTime convertLocalDateTime(String localDateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return LocalDateTime.parse(localDateTime, formatter);
+    }
 
     @Named("medServiceEntitiesWithoutSpecialization")
     @IterableMapping(qualifiedByName = "medServiceEntityWithoutSpecialization")

@@ -5,6 +5,7 @@ import com.mitskevich.course_7sem.model.ScheduleTime;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ScheduleTimeService {
@@ -15,5 +16,6 @@ public interface ScheduleTimeService {
     ScheduleTime saveScheduleTime(ScheduleTime scheduleTime);
     void deleteScheduleTime(ScheduleDay scheduleDay);
     void blockTime(UUID scheduleTimeId);
-    ScheduleTime findByScheduleDayAndTime(UUID scheduleDayId, LocalTime time);
+    Optional<ScheduleTime> findByScheduleDayAndTime(UUID scheduleDayId, LocalTime time);
+    List<ScheduleTime> getAvailableScheduleTimes(UUID scheduleDayId);
 }

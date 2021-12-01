@@ -81,6 +81,11 @@ public class ScheduleDayServiceImpl implements ScheduleDayService {
     }
 
     @Override
+    public ScheduleDay updateSchedule(ScheduleDay scheduleDay) {
+        return scheduleDayRepository.save(scheduleDay);
+    }
+
+    @Override
     public void deleteSchedule(UUID doctorId) {
 
     }
@@ -88,6 +93,11 @@ public class ScheduleDayServiceImpl implements ScheduleDayService {
     @Override
     public ScheduleDay findByDate(LocalDate date, UUID doctorId) {
         return scheduleDayRepository.getByDateAndDoctorId(date, doctorId);
+    }
+
+    @Override
+    public boolean isAllScheduleTimesBlocked(UUID scheduleDayId) {
+        return scheduleTimeService.getAvailableScheduleTimes(scheduleDayId).size() == 0;
     }
 
     private void addExtraScheduleDays(Doctor doctor, List<ScheduleDay> scheduleDays, int numberOfExtraDays) {

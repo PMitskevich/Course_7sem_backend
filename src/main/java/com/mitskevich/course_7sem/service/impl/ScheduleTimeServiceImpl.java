@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -91,7 +92,12 @@ public class ScheduleTimeServiceImpl implements ScheduleTimeService {
     }
 
     @Override
-    public ScheduleTime findByScheduleDayAndTime(UUID scheduleDayId, LocalTime time) {
-        return scheduleTimeRepository.findByScheduleDayIdAndTime(scheduleDayId, time);
+    public Optional<ScheduleTime> findByScheduleDayAndTime(UUID scheduleDayId, LocalTime time) {
+        return Optional.ofNullable(scheduleTimeRepository.findByScheduleDayIdAndTime(scheduleDayId, time));
+    }
+
+    @Override
+    public List<ScheduleTime> getAvailableScheduleTimes(UUID scheduleDayId) {
+        return scheduleTimeRepository.findScheduleTimeByIsBlockedAndScheduleDayId(false, scheduleDayId);
     }
 }

@@ -10,7 +10,12 @@ import com.mitskevich.course_7sem.model.Doctor;
 import com.mitskevich.course_7sem.model.Owner;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.Named;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Mapper
 public interface AppointmentMapperHelper {

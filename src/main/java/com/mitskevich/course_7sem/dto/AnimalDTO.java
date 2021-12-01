@@ -16,7 +16,7 @@ public class AnimalDTO {
     private String name;
     private LocalDate birthday;
     private String breed;
-    private Gender gender;
+    private String gender;
     private OwnerDTO owner;
     private List<AppointmentDTO> appointments;
 }
