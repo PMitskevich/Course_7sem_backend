@@ -4,6 +4,8 @@ import com.mitskevich.course_7sem.exception.DeleteEntityException;
 import com.mitskevich.course_7sem.exception.ResourceNotFoundException;
 import com.mitskevich.course_7sem.exception.detail.ErrorInfo;
 import com.mitskevich.course_7sem.model.Doctor;
+import com.mitskevich.course_7sem.model.ScheduleDay;
+import com.mitskevich.course_7sem.model.ScheduleTime;
 import com.mitskevich.course_7sem.model.Specialization;
 import com.mitskevich.course_7sem.repository.DoctorRepository;
 import com.mitskevich.course_7sem.service.interfaces.DoctorService;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -37,10 +40,12 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public Doctor findById(UUID id) {
-        return doctorRepository.findById(id)
+        Doctor doctor = doctorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorInfo.RESOURCE_NOT_FOUND,
                         messageSource.getMessage("message.ResourceNotFound",
                                 new Object[]{id, messageSource.getMessage("entity.Doctor", null, LocaleContextHolder.getLocale())}, LocaleContextHolder.getLocale())));
+        sortSchedule(doctor);
+        return doctor;
     }
 
     @Override
@@ -94,6 +99,19 @@ public class DoctorServiceImpl implements DoctorService {
             throw new DeleteEntityException(ErrorInfo.DELETE_ENTITY_EXCEPTION,
                     messageSource.getMessage("message.DeleteEntityError", args, LocaleContextHolder.getLocale()));
         }
+    }
+
+    private void sortSchedule(Doctor doctor) {
+        List<ScheduleDay> scheduleDays = doctor.getScheduleDays().stream()
+                .sorted(Comparator.comparing(ScheduleDay::getDate)).collect(Collectors.toList());
+
+        List<ScheduleDay> sortedScheduleDays = scheduleDays.stream()
+                .peek(scheduleDay -> {
+                    List<ScheduleTime> scheduleTimes = scheduleDay.getScheduleTimes().stream().sorted(Comparator.comparing(ScheduleTime::getTime))
+                            .collect(Collectors.toList());
+                    scheduleDay.setScheduleTimes(scheduleTimes);
+                }).collect(Collectors.toList());
+        doctor.setScheduleDays(sortedScheduleDays);
     }
 
     private void setSpecializations(Doctor doctor, List<Specialization> newSpecializationsInDoctor) {

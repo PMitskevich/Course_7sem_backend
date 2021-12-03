@@ -8,19 +8,14 @@ import com.mitskevich.course_7sem.model.Animal;
 import com.mitskevich.course_7sem.model.Appointment;
 import com.mitskevich.course_7sem.model.Owner;
 import com.mitskevich.course_7sem.model.User;
-import com.mitskevich.course_7sem.model.enums.Role;
-import com.mitskevich.course_7sem.model.enums.Status;
 import com.mitskevich.course_7sem.repository.OwnerRepository;
 import com.mitskevich.course_7sem.service.interfaces.OwnerService;
 import com.mitskevich.course_7sem.service.interfaces.UserService;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -66,7 +61,9 @@ public class OwnerServiceImpl implements OwnerService {
             owner1.setEmail(owner.getEmail());
             owner1.setPhone(owner.getPhone());
             User existingUser = owner.getUser();
-            owner1.setUser(userService.update(existingUser.getId(), existingUser));
+//            owner1.setUser(userService.update(existingUser.getId(), existingUser));
+            existingUser.setOwner(owner);
+            owner1.setUser(existingUser);
             if (owner.getAnimals() != null) {
                 List<Animal> animals = owner.getAnimals();
                 animals.clear();

@@ -16,7 +16,6 @@ public interface ScheduleDayMapper {
             @Mapping(target = "doctor", qualifiedByName = "noScheduleDayDoctor"),
             @Mapping(target = "scheduleTimes", qualifiedByName = "scheduleTimeDTO")
     })
-//    @Mapping(target = "doctor", qualifiedByName = "noScheduleDayDoctor")
     ScheduleDayDTO convertToScheduleDayDTO(ScheduleDay scheduleDay);
     ScheduleDay convertToScheduleDay(ScheduleDayDTO scheduleDay);
 }

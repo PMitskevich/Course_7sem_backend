@@ -2,8 +2,12 @@ package com.mitskevich.course_7sem.service.mapper.helper;
 
 import com.mitskevich.course_7sem.dto.AnimalDTO;
 import com.mitskevich.course_7sem.dto.AppointmentDTO;
+import com.mitskevich.course_7sem.dto.OwnerDTO;
+import com.mitskevich.course_7sem.dto.UserDTO;
 import com.mitskevich.course_7sem.model.Animal;
 import com.mitskevich.course_7sem.model.Appointment;
+import com.mitskevich.course_7sem.model.Owner;
+import com.mitskevich.course_7sem.model.User;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -18,12 +22,23 @@ import java.util.List;
 @Mapper
 public interface AnimalMapperHelper {
     @Named("noAppointmentAnimal")
-    @Mapping(target = "appointments", ignore = true)
+    @Mappings({
+            @Mapping(target = "owner", qualifiedByName = "noUserOwner"),
+            @Mapping(target = "appointments", ignore = true)
+    })
     AnimalDTO convertToAnimalDTOWithoutAppointments(Animal animal);
 
     @IterableMapping(qualifiedByName = "noAnimalAppointment")
     List<AppointmentDTO> getAppointmentDTOList(Collection<Appointment> appointments);
 //    List<Appointment> getAppointmentList(Collection<AppointmentDTO> appointments);
+
+    @Named("noUserOwner")
+    @Mappings({
+            @Mapping(target = "user", ignore = true),
+            @Mapping(target = "appointments", ignore = true),
+            @Mapping(target = "animals", ignore = true)
+    })
+    OwnerDTO convertOwnerDTOWithoutUser(Owner owner);
 
     @Named("noAnimalAppointment")
     @Mappings({

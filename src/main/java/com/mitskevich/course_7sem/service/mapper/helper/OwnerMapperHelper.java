@@ -39,7 +39,18 @@ public interface OwnerMapperHelper {
 
     @IterableMapping(qualifiedByName = "noOwnerAnimals")
     List<AnimalDTO> getAnimalDTOList(Collection<Animal> animals);
+    @IterableMapping(qualifiedByName = "animalsWithParsedAppointmentDates")
     List<Animal> getAnimalList(Collection<AnimalDTO> animals);
+
+    @Named("animalsWithParsedAppointmentDates")
+    Animal convertAnimalDTOtoEntity(AnimalDTO animalDTO);
+
+    @IterableMapping(qualifiedByName = "appointmentWithParsedDate")
+    List<Appointment> getAppointmentList(Collection<AppointmentDTO> appointments);
+
+    @Named("appointmentWithParsedDate")
+    @Mapping(target = "dateTime", qualifiedByName = "dateTimeConversionToLocalDateTimeForOwner")
+    Appointment convertAppointmentDTOtoEntity(AppointmentDTO appointmentDTO);
 
     @Named("noOwnerAnimals")
     @Mapping(target = "owner", ignore = true)
@@ -47,7 +58,6 @@ public interface OwnerMapperHelper {
 
     @IterableMapping(qualifiedByName = "noOwnerAppointments")
     List<AppointmentDTO> getAppointmentDTOList(Collection<Appointment> appointments);
-//    List<Appointment> getAppointmentList(Collection<AppointmentDTO> appointments);
 
     @Named("noOwnerAppointments")
     @Mappings({
@@ -66,6 +76,12 @@ public interface OwnerMapperHelper {
         int minutes = localTime.getMinute();
         stringBuilder.append(":").append(minutes == 0 ? "00" : minutes);
         return stringBuilder.toString();
+    }
+
+    @Named("dateTimeConversionToLocalDateTimeForOwner")
+    default LocalDateTime convertLocalDateTime(String localDateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return LocalDateTime.parse(localDateTime, formatter);
     }
 
 //    Appointment convertToAppointment(AppointmentDTO appointmentDTO);
