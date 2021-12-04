@@ -18,8 +18,19 @@ import java.util.List;
 @Mapper(uses = {ReviewMapperHelper.class, OwnerMapperHelper.class})
 public interface UserMapperHelper {
     @Named("noReviewsUser")
-    @Mapping(target = "reviews", ignore = true)
+    @Mappings({
+            @Mapping(target = "reviews", ignore = true),
+            @Mapping(target = "owner", qualifiedByName = "ownerWithoutListsAndUser")
+    })
     UserDTO convertToUserDTOWithoutReviews(User user);
+
+    @Named("ownerWithoutListsAndUser")
+    @Mappings({
+            @Mapping(target = "animals", ignore = true),
+            @Mapping(target = "appointments", ignore = true),
+            @Mapping(target = "user", ignore = true)
+    })
+    OwnerDTO convertToOwnerDTOWithoutListsAndUser(Owner owner);
 
     @Named("noOwnerUser")
     @Mapping(target = "owner", ignore = true)

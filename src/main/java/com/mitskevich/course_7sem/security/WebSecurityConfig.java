@@ -56,6 +56,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/appointment/{\\w+}").hasAuthority(Role.USER.name())
                 .antMatchers(HttpMethod.GET, "/appointment/myAppointments/{\\w+}").hasAuthority(Role.USER.name())
                 .antMatchers(HttpMethod.DELETE, "/doctor/{\\w+}").hasAuthority(Role.USER.name())
+                .antMatchers("/review/all").permitAll()
+                .antMatchers("/review/user/{\\w+}").authenticated()
+                .antMatchers("/review/addReview").authenticated()
+                .antMatchers(HttpMethod.DELETE, "/review/{\\w+}").hasAuthority(Role.ADMIN.name())
                 .anyRequest().authenticated()
                 .and()
                 .apply(jwtConfigurer);
