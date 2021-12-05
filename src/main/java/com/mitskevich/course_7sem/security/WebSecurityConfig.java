@@ -55,7 +55,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/appointment/addAppointment").hasAuthority(Role.USER.name())
                 .antMatchers(HttpMethod.GET, "/appointment/{\\w+}").hasAuthority(Role.USER.name())
                 .antMatchers(HttpMethod.GET, "/appointment/myAppointments/{\\w+}").hasAuthority(Role.USER.name())
-                .antMatchers(HttpMethod.DELETE, "/doctor/{\\w+}").hasAuthority(Role.USER.name())
                 .antMatchers("/review/all").permitAll()
                 .antMatchers("/review/user/{\\w+}").authenticated()
                 .antMatchers("/review/addReview").authenticated()

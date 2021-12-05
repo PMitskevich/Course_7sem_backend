@@ -141,6 +141,9 @@ public interface AppointmentMapper {
     AnimalDTO convertToAnimalDTOWithoutOwner(Animal animal);
 
     @Named("noOwnerUser")
-    @Mapping(target = "owner", ignore = true)
+    @Mappings({
+            @Mapping(target = "owner", ignore = true),
+            @Mapping(target = "reviews", ignore = true)
+    })
     UserDTO convertToUserDTOWithoutOwner(User user);
 }
