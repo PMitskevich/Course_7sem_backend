@@ -1,0 +1,201 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="Lenovo (generated)" id="1639078362313-1">
+        <createTable tableName="animal">
+            <column name="animal_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="animal_pkey"/>
+            </column>
+            <column name="birthday" type="date"/>
+            <column name="breed" type="VARCHAR(255)"/>
+            <column name="gender" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="owner_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-2">
+        <createTable tableName="appointment">
+            <column name="appointment_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="appointment_pkey"/>
+            </column>
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="animal_id" type="UUID"/>
+            <column name="doctor_id" type="UUID"/>
+            <column name="owner_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-3">
+        <createTable tableName="schedule_day">
+            <column name="schedule_day_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="schedule_day_pkey"/>
+            </column>
+            <column name="date" type="date"/>
+            <column name="is_blocked" type="BOOLEAN"/>
+            <column name="doctor_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-4">
+        <createTable tableName="schedule_time">
+            <column name="schedule_time_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="schedule_time_pkey"/>
+            </column>
+            <column name="is_blocked" type="BOOLEAN"/>
+            <column name="schedule_time" type="TIME WITHOUT TIME ZONE"/>
+            <column name="schedule_day_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-5">
+        <createTable tableName="doctor">
+            <column name="doctor_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="doctor_pkey"/>
+            </column>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="experience" type="VARCHAR(255)"/>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="patronymic" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-6">
+        <createTable tableName="specialization_doctor">
+            <column name="specialization_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="doctor_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-7">
+        <createTable tableName="user">
+            <column name="user_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="user_pkey"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="role" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="owner_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-8">
+        <createTable tableName="review">
+            <column name="review_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="review_pkey"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="user_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-9">
+        <createTable tableName="owner">
+            <column name="owner_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="owner_pkey"/>
+            </column>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="patronymic" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-10">
+        <createTable tableName="service">
+            <column name="service_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="service_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="price" type="VARCHAR(255)"/>
+            <column name="specialization_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-11">
+        <createTable tableName="specialization">
+            <column name="specialization_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="specialization_pkey"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-12">
+        <addForeignKeyConstraint baseColumnNames="animal_id" baseTableName="appointment" constraintName="fk2kkeptdxfuextg5ch7xp3ytie" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="animal_id" referencedTableName="animal" validate="true"/>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-13">
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="animal" constraintName="fkojllrs4g1np633u6beb3hnk74" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="owner_id" referencedTableName="owner" validate="true"/>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-14">
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="appointment" constraintName="fkjl26sq1kn4uv9vl6e2maskvh6" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="owner_id" referencedTableName="owner" validate="true"/>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-15">
+        <addForeignKeyConstraint baseColumnNames="doctor_id" baseTableName="appointment" constraintName="fkoeb98n82eph1dx43v3y2bcmsl" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="doctor_id" referencedTableName="doctor" validate="true"/>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-16">
+        <addForeignKeyConstraint baseColumnNames="schedule_day_id" baseTableName="schedule_time" constraintName="fk3ps86dn7uc2is94pnpl9gidr8" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="schedule_day_id" referencedTableName="schedule_day" validate="true"/>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-17">
+        <addForeignKeyConstraint baseColumnNames="doctor_id" baseTableName="schedule_day" constraintName="fka0ix934xip7rsmq2n2p071l4q" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="doctor_id" referencedTableName="doctor" validate="true"/>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-18">
+        <addForeignKeyConstraint baseColumnNames="doctor_id" baseTableName="specialization_doctor" constraintName="fk8cuifjxgboakunxef9i3601fc" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="doctor_id" referencedTableName="doctor" validate="true"/>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-19">
+        <addForeignKeyConstraint baseColumnNames="specialization_id" baseTableName="specialization_doctor" constraintName="fkr4j4bnc1853ed6gt7g5vjdkvf" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="specialization_id" referencedTableName="specialization" validate="true"/>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-20">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="review" constraintName="fkiyf57dy48lyiftdrf7y87rnxi" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="user" validate="true"/>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-21">
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="user" constraintName="fksh3pcsylmhgc8oq5hpjlaulnj" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="owner_id" referencedTableName="owner" validate="true"/>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" id="1639078362313-22">
+        <addForeignKeyConstraint baseColumnNames="specialization_id" baseTableName="service" constraintName="fkjqtka0pugskt27vcpn0jchog" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="specialization_id" referencedTableName="specialization" validate="true"/>
+    </changeSet>
+
+    <changeSet author="Pavel Mitskevich" id="1639078362313-23">
+        <insert tableName="user">
+            <column name="user_id" value="3fc6ebb2-4c51-4188-b1dd-10da3148c63c" />
+            <column name="email" value="admin@gmail.com" />
+            <column name="password" value="$2a$12$rzQkYbA3/fTFlFXUBsYMEO8k90RfeqpJ26L3T64MXrg5V32OxQO3C" />
+            <column name="role" value="ADMIN" />
+            <column name="status" value="ACTIVE" />
+        </insert>
+        <rollback/>
+    </changeSet>
+    <changeSet author="Pavel Mitskevich" id="1639078362313-24">
+        <insert tableName="doctor">
+            <column name="doctor_id" value="e61a2f11-da3e-4f9e-9995-1df8d90db055" />
+            <column name="address" value="ул Васильева 64, кв 45" />
+            <column name="experience" value="1 год" />
+            <column name="first_name" value="Пётр" />
+            <column name="last_name" value="Петров" />
+            <column name="patronymic" value="Петрович" />
+            <column name="phone" value="+375 29 987 65 43" />
+        </insert>
+        <rollback/>
+    </changeSet>
+    <changeSet author="Pavel Mitskevich" id="1639078362313-25">
+        <insert tableName="specialization">
+            <column name="specialization_id" value="afc8006a-8642-4314-9ad3-37c9c5039630" />
+            <column name="name" value="Специализация" />
+        </insert>
+        <rollback/>
+    </changeSet>
+    <changeSet author="Pavel Mitskevich" id="1639078362313-26">
+        <insert tableName="specialization_doctor">
+            <column name="specialization_id" value="afc8006a-8642-4314-9ad3-37c9c5039630" />
+            <column name="doctor_id" value="e61a2f11-da3e-4f9e-9995-1df8d90db055" />
+        </insert>
+        <rollback/>
+    </changeSet>
+    <changeSet author="Pavel Mitskevich" id="1639078362313-27">
+        <insert tableName="service">
+            <column name="service_id" value="12999c72-af32-4b01-a190-4400ca329464" />
+            <column name="name" value="Услуга" />
+            <column name="price" value="10" />
+            <column name="specialization_id" value="afc8006a-8642-4314-9ad3-37c9c5039630" />
+        </insert>
+        <rollback/>
+    </changeSet>
+</databaseChangeLog>
