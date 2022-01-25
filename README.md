@@ -2,7 +2,7 @@
 
 This API is a backend part on Veterinary clinic web application.<br/>
 
-###Packages
+### Packages
 
 - ***controller*** - classes, which handle requests
 - ***exception*** - classes, which represent hierarchy of custom exceptions
