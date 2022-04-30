@@ -16,6 +16,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -44,7 +45,7 @@ public class DoctorServiceImpl implements DoctorService {
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorInfo.RESOURCE_NOT_FOUND,
                         messageSource.getMessage("message.ResourceNotFound",
                                 new Object[]{id, messageSource.getMessage("entity.Doctor", null, LocaleContextHolder.getLocale())}, LocaleContextHolder.getLocale())));
-        sortSchedule(doctor);
+        doctor = checkActualSchedule(doctor);
         return doctor;
     }
 
@@ -101,6 +102,22 @@ public class DoctorServiceImpl implements DoctorService {
         }
     }
 
+    private Doctor checkActualSchedule(Doctor doctor) {
+        List<ScheduleDay> actualDates = scheduleDayService.getActualDays(doctor.getScheduleDays());
+        if (actualDates.size() == 0) {
+            doctor.getScheduleDays().addAll(scheduleDayService.createSchedule(doctor));
+            return doctor;
+        }
+        sortSchedule(doctor);
+        List<ScheduleDay> schedule = doctor.getScheduleDays();
+        while (schedule.size() < 14) {
+            LocalDate lastActualDate = schedule.get(schedule.size() - 1).getDate();
+            ScheduleDay day = scheduleDayService.createScheduleDay(doctor, lastActualDate.plusDays(1));
+            schedule.add(day);
+        }
+        return doctor;
+    }
+
     private void sortSchedule(Doctor doctor) {
         List<ScheduleDay> scheduleDays = doctor.getScheduleDays().stream()
                 .sorted(Comparator.comparing(ScheduleDay::getDate)).collect(Collectors.toList());
@@ -109,9 +126,13 @@ public class DoctorServiceImpl implements DoctorService {
                 .peek(scheduleDay -> {
                     List<ScheduleTime> scheduleTimes = scheduleDay.getScheduleTimes().stream().sorted(Comparator.comparing(ScheduleTime::getTime))
                             .collect(Collectors.toList());
-                    scheduleDay.setScheduleTimes(scheduleTimes);
+                    scheduleDay.getScheduleTimes().clear();
+                    scheduleDay.getScheduleTimes().addAll(scheduleTimes);
+//                    scheduleDay.setScheduleTimes(scheduleTimes);
                 }).collect(Collectors.toList());
-        doctor.setScheduleDays(sortedScheduleDays);
+        doctor.getScheduleDays().clear();
+        doctor.getScheduleDays().addAll(sortedScheduleDays);
+//        doctor.setScheduleDays(sortedScheduleDays);
     }
 
     private void setSpecializations(Doctor doctor, List<Specialization> newSpecializationsInDoctor) {

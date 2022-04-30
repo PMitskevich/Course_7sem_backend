@@ -35,8 +35,10 @@ public class SpecializationServiceImpl implements SpecializationService {
     @Override
     public Specialization saveSpecialization(Specialization specialization) {
         if (specializationRepository.findByName(specialization.getName()).isEmpty()) {
-            for (MedicalServiceEntity medicalServiceEntity: specialization.getMedicalServiceEntities()) {
-                medicalServiceEntity.setSpecialization(specialization);
+            if (specialization.getMedicalServiceEntities() != null) {
+                for (MedicalServiceEntity medicalServiceEntity: specialization.getMedicalServiceEntities()) {
+                    medicalServiceEntity.setSpecialization(specialization);
+                }
             }
             return specializationRepository.save(specialization);
         } else {

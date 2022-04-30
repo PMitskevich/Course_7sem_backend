@@ -4,6 +4,7 @@ import com.mitskevich.course_7sem.exception.ResourceNotFoundException;
 import com.mitskevich.course_7sem.exception.detail.ErrorInfo;
 import com.mitskevich.course_7sem.model.Doctor;
 import com.mitskevich.course_7sem.model.ScheduleDay;
+import com.mitskevich.course_7sem.model.ScheduleTime;
 import com.mitskevich.course_7sem.repository.ScheduleDayRepository;
 import com.mitskevich.course_7sem.service.interfaces.ScheduleDayService;
 import com.mitskevich.course_7sem.service.interfaces.ScheduleTimeService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -100,6 +102,39 @@ public class ScheduleDayServiceImpl implements ScheduleDayService {
         return scheduleTimeService.getAvailableScheduleTimes(scheduleDayId).size() == 0;
     }
 
+    @Override
+    public List<ScheduleDay> getActualDays(List<ScheduleDay> days) {
+//        List<ScheduleDay> expiredDates = new ArrayList<>();
+        Iterator<ScheduleDay> iterator = days.iterator();
+        while (iterator.hasNext()) {
+            ScheduleDay day = iterator.next();
+            if (day.getDate().compareTo(LocalDate.now()) < 0) {
+//                expiredDates.add(day);
+                iterator.remove();
+                scheduleDayRepository.deleteById(day.getId());
+            }
+        }
+//        for (ScheduleDay day : days) {
+//            if (day.getDate().compareTo(LocalDate.now()) < 0) {
+//                days.remove(day);
+//                scheduleDayRepository.deleteById(day.getId());
+//            }
+//        }
+
+//        deleteAllExpiredDates(expiredDates);
+//        days.removeAll(expiredDates);
+        return days;
+    }
+
+    @Override
+    public ScheduleDay createScheduleDay(Doctor doctor, LocalDate date) {
+        ScheduleDay scheduleDay = new ScheduleDay(date);
+        scheduleDay.setDoctor(doctor);
+        ScheduleDay persistedScheduleDay = scheduleDayRepository.save(scheduleDay);
+        persistedScheduleDay.setScheduleTimes(scheduleTimeService.createScheduleTime(persistedScheduleDay));
+        return scheduleDay;
+    }
+
     private void addExtraScheduleDays(Doctor doctor, List<ScheduleDay> scheduleDays, int numberOfExtraDays) {
         LocalDate oldMaxDate = findMaxLocalDate(scheduleDays);
         for (int i = 0; i < numberOfExtraDays; i++) {
@@ -123,5 +158,12 @@ public class ScheduleDayServiceImpl implements ScheduleDayService {
             }
         }
         return maxDate;
+    }
+
+    private void deleteAllExpiredDates(List<ScheduleDay> expiredDates) {
+        for (ScheduleDay day: expiredDates) {
+            scheduleTimeService.deleteScheduleTime(day);
+            scheduleDayRepository.delete(day);
+        }
     }
 }

@@ -16,4 +16,6 @@ public interface ScheduleDayService {
     void deleteSchedule(UUID doctorId);
     ScheduleDay findByDate(LocalDate date, UUID doctorId);
     boolean isAllScheduleTimesBlocked(UUID scheduleDayId);
+    List<ScheduleDay> getActualDays(List<ScheduleDay> days);
+    ScheduleDay createScheduleDay(Doctor doctor, LocalDate date);
 }

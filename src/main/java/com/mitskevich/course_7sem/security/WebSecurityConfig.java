@@ -59,6 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/review/user/{\\w+}").authenticated()
                 .antMatchers("/review/addReview").authenticated()
                 .antMatchers(HttpMethod.DELETE, "/review/{\\w+}").hasAuthority(Role.ADMIN.name())
+                .antMatchers(HttpMethod.GET, "/statistics/lineGraphNotes").hasAuthority(Role.ADMIN.name())
                 .anyRequest().authenticated()
                 .and()
                 .apply(jwtConfigurer);
